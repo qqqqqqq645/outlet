@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Socket.IO chat</title>
+  </head>
+  <body>
+    <h1>멀티탭님</h1>
+    <div><input type = "button" id = "sw1"></div>
+    <div>
+        <p id = "test"></p>
+    </div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	   <script>
+        var socket = io();
+        socket.on('sw1',(data) => {
+            $('#sw1').checked = data;
+            socket.emit('sw1',data);
+            swStatus(data);
+            
+        });
+
+        $(function () {
+
+            $('#sw1').change(() => {
+                var swvalue = Number($('#sw1').is(":checked"))
+                console.log(swvalue);
+                socket.emit("sw1",swvalue);
+                swStatus(swvalue);
+
+                
+            });
+        });
+        
+
+        function swStatus(val){
+            
+            if(val){
+                $('#test').text("켜짐");
+                $('#sw1').prop('checked', true);
+            }
+            else{
+                $('#test').text("꺼짐");
+                $('#sw1').prop('checked', false);
+            }
+
+        }
+    </script>
+  </body>
+</html>
+
